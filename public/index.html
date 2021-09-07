@@ -19,31 +19,32 @@
     <script src="/socket.io/socket.io.js"></script>
     </script>
     <script>
-			const socket = io()
-			socket.on('init', function(msg) {
-				console.log(msg)
-			})
-			socket.on('message', function(msg) {
-				console.log(msg)
-			})
-			$(document).ready(function() {
-					socket.on('message', function(msg) {
-							$('.logs').append($('<li>').text(msg));
-					});
+        // const socket = io.connect('http://localhost:8000', {path:'/full/socket.io'})
+        const socket = io();
+        socket.on('init', function(msg) {
+            console.log(msg)
+        })
+        socket.on('message', function(msg) {
+            console.log(msg)
+        })
+        $(document).ready(function() {
+            socket.on('message', function(msg) {
+                $('.logs').append($('<li>').text(msg));
+            });
 
-					socket.on('qr', function(src) {
-							$('#qrcode').attr('src', src);
-							$('#qrcode').show();
-					});
+            socket.on('qr', function(src) {
+                $('#qrcode').attr('src', src);
+                $('#qrcode').show();
+            });
 
-					socket.on('listo', function(data) {
-							$('#qrcode').hide();
-					});
+            socket.on('listo', function(data) {
+                $('#qrcode').hide();
+            });
 
-					socket.on('authenticated', function(data) {
-							$('#qrcode').hide();
-					});
-			});
+            socket.on('authenticated', function(data) {
+                $('#qrcode').hide();
+            });
+        });
     </script>
 </body>
 

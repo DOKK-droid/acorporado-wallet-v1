@@ -14,8 +14,8 @@ app.set("socketio", io)
     // lLamamos las rutas
 app.use('/', routes)
 
-const port = process.env.PORT
-    // Función de iniciar servidor
+const port = process.env.PORT || 8000;
+// Función de iniciar servidor
 function runServer() {
     server.listen(port, () => {
         console.log(`listening on PORT*: ${port} `);
