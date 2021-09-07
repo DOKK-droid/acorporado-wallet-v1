@@ -117,7 +117,7 @@ const init = async(socket) => {
                             // si el mensaje es Bingo entonces buscara en el archivo bot.json: bot.json buscara init.bingo
                             var msg = bot.init[message.body]
                                 // msg.message es igual a bot.json llama init.bingo.message
-                            const mediaInit = MessageMedia.fromFilePath(__dirname + `\\images\\logo-wallet-inicio.png`);
+                            const mediaInit = MessageMedia.fromFilePath(__dirname + `/images/logo-wallet-inicio.png`);
                             sendMessage(message.from, mediaInit);
                             sendMessage(message.from, (msg.encode_msg ? decodeURI(msg.message) : msg.message))
 
