@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon server"
+        "start": "node server"
     },
     "nodemonConfig": {
         "ignore": [
@@ -20,9 +20,6 @@
         "whatsapp-web.js": "^1.12.6"
     },
     "dependencies": {
-        "audio-loader": "^1.0.3",
-        "audio-play": "^2.3.1",
-        "audio-sink": "^1.1.6",
         "awesome-phonenumber": "^2.54.0",
         "bcrypt": "^5.0.1",
         "cors": "^2.8.5",
