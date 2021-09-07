@@ -1,0 +1,50 @@
+https://sqliteonline.com/ ---- HERRAMIENTA ONLINE SQL
+https://www.webminal.org/terminal/ --- HERRAMIENTA ONLINE LINUX
+
+CREATE TABLE demo2 ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(20), hint TEXT )
+
+
+
+
+
+
+cat > nombrearchivo.extension  // Ejemplo: cat > malabo.txt ENTER
+
+
+
+Contenido .........................
+ Me llamo MIguel
+
+
+
+
+ Para guardar el archivo se usa Cntr+D
+
+
+ cp ->   Copiar a boko2
+
+
+ variable:     malabo@bata
+
+
+
+ 1 Crear nueva carpeta 
+ 2 usar el comando
+
+ mv *.jpg ejemplo
+
+ABSOLUTO:
+
+/home/miamith/home/luis/Carta.txt
+
+RELATIVO:
+
+luis/Carta.txt
+
+
+
+
+
+
+
+

@@ -1,0 +1,267 @@
+{
+    "init": {
+        "Bingo": {
+            "message": "💱💰💰💰💰💰💱%0A*ACORPORADO%20WALLET*%0A*Saludos,*%0ATus%20env%C3%ADos,%20compras%20ganancias%20y%20billetera%0A%E2%80%9C🤑_Tu%20ganas%20y%20yo%20gano_%E2%80%9D%0A%0A*Env%C3%ADa:*%0A*R*%20-%20%3E%20Registrarse%0A*S*%20-%20%3E%20Si%20ya%20est%C3%A1%20registrado",
+            "encode_msg": true,
+            "is_input": false
+        },
+        "R": {
+            "message": "👨‍⚕️ _Vamos a registrarte_,\n*ingresa tu nombre completo...*",
+            "encode_msg": false,
+            "is_input": true,
+            "next_status": "101"
+        },
+        "CM": {
+            "message": "👨‍⚕️ _Vamos a modificar sus datos_,\n⚠ *Ingresa tu nombre completo...*",
+            "encode_msg": false,
+            "is_input": true,
+            "next_status": "401"
+        },
+        "1": {
+            "message": "✔ 💚 *Operación exitosa.\nGracias por la recarga 💳",
+            "encode_msg": false,
+            "is_input": true,
+            "next_status": "500"
+        },
+        "2": {
+            "message": "Desea%20*Realizar%20env%C3%ADo*%20?%20%E2%86%97%0A%0A*Envia:*%0A%E2%9C%85%20*SI*%20%C3%B3%20%E2%9D%8C%20*NO*%20%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%84%B9%0A_Puedes%20ganar%20mucho%20enviando%20y%20recibiendo_",
+            "encode_msg": true,
+            "is_input": true,
+            "next_status": "2001"
+        },
+        "3": {
+            "message": "%C2%BFDesea%20*recibir%20un%20envi%C3%B3*?%20%E2%86%99%F0%9F%92%B0%0A%0A*Envia:*%0A%E2%9C%85%20SI%20o%20%E2%9D%8C%20NO%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%84%B9%0A_Puedes%20ganar%20mucho%20enviando%20y%20recibiendo_%0A",
+            "encode_msg": true,
+            "is_input": true,
+            "next_status": "3001"
+        },
+        "4": {
+            "message": "✅ *Exito, Gracias por el pago*\n              \nℹ\n_Puedes ganar mucho realizando pagos_",
+            "encode_msg": true,
+            "is_input": true,
+            "next_status": "500"
+        },
+        "5": {
+            "message": "⏳ _Gracias por esperar el pago_\n*ESCANE ESTE CODIGO SU CLIENTE* ✅\n⚠ Si no esta cerca su cliente enviale la imagen QR\n              ℹ\n_Puedes ganar mucho recibiendo pagos_",
+            "encode_msg": true,
+            "is_input": true,
+            "next_status": "500"
+        },
+        "6": {
+            "message": "Desea%20*Afiliarse*%20?%20%F0%9F%A5%88%F0%9F%91%AA%0A%0A*Envia:*%0A%E2%9C%85%20*SI*%20%C3%B3%20%E2%9D%8C%20*NO*%20%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%84%B9%0A_Puedes%20ganar%20mucho%20enviando%20y%20recibiendo,%20se%20crear%C3%A1%20su%20cuenta%20de%20comisiones_",
+            "encode_msg": true,
+            "is_input": true,
+            "next_status": "6001"
+        },
+        "7": {
+            "message": "🗂 _Pagando factura_\n*Ingrese el código FAC..:*",
+            "encode_msg": true,
+            "is_input": true,
+            "next_status": "7001"
+        },
+        "8": {
+            "message": "🗂 📲 _Demandando pago de factura_\n*Ingrese telefono del cliente:*",
+            "encode_msg": true,
+            "is_input": true,
+            "next_status": "8001"
+        },
+        "101": {
+            "message": "✅ *Operación exitosa, Gracias por el retiro*",
+            "encode_msg": true,
+            "is_input": false,
+            "next_status": "500"
+        },
+        "102": {
+            "message": "✅ *Operación exitosa, Gracias por tomar sus comisiones*",
+            "encode_msg": false,
+            "is_input": false,
+            "next_status": "500"
+        }
+    },
+    "status_code": {
+        "101": {
+            "confirmation": {
+                "message": "_Registramos tu nombre_ ✅\n*Ahora ingresa tu ciudad...*",
+                "encode_msg": false,
+                "next_status": "102"
+            }
+        },
+        "102": {
+            "confirmation": {
+                "message": "_Registramos tu ciudad_ ✅\n*Ahora ingresa tu dirección de correo elétronico (email) 📧*",
+                "encode_msg": false,
+                "next_status": "103"
+            }
+        },
+        "103": {
+            "confirmation": {
+                "message": "_Registramos tu email_ ✅\n*Ahora ingresa tu codigo PIN* _(Ej: 123456)_",
+                "encode_msg": false,
+                "next_status": "104"
+            }
+        },
+        "104": {
+            "confirmation": {
+                "message": "_Registramos tu código PIN ✅\n⚠ (Por tu seguridad elimina el mensaje que incluye tu PIN 🔒)._\n*GRACIAS POR REGISTRARTE*,\nIngresa *S* para Iniciar Sesión",
+                "encode_msg": false,
+                "next_status": "201"
+            }
+        },
+        "201": {
+            "confirmation": {
+                "message": "🔐 Ahora ingresa tu código PIN ",
+                "encode_msg": false,
+                "next_status": "202"
+            }
+        },
+        "202": {
+            "confirmation": {
+                "message": "🔐 Código PIN válido",
+                "encode_msg": false,
+                "next_status": "500"
+            }
+        },
+        "500": {
+            "confirmation": {
+                "message": "%F0%9F%8F%A0%20*MENU%20PRINCIPAL*%20%F0%9F%8F%A0%0A*SERVICIOS%20PUNTUALES%20Y%20WALLET*%0A%0A*Env%C3%ADa:*%20%20%0A*1%20-%3E*%20Recargar%20saldo%20%F0%9F%92%B0%0A*2%20-%3E*%20Enviar%20dinero%20%20%20%20%20%F0%9F%92%B1%0A*3%20-%3E*%20Recibir%20dinero%20%20%20%20%F0%9F%97%B3%0A*4%20-%3E*%20Enviar%20pago%20de%20servicio%20%F0%9F%93%A4%20%F0%9F%9A%95%0A*5%20-%3E*%20Recibir%20pago%20servicio%20%20%20%20%20%F0%9F%93%A5%20%F0%9F%8D%94%0A*6%20-%3E*%20Afiliarse%20para%20ganar%20%20%20%20%20%20%20%20%F0%9F%9A%BB%0A*7%20-%3E*%20Pagar%20factura%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%F0%9F%93%91%0A*8%20-%3E*%20Recibir%20pago%20factura%20%20%20%20%20%20%20%F0%9F%93%84%0A*9%20-%3E*%20Pagar%20luz%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%9A%A1%0A*10%20-%3E*%20*Mi%20cuenta*%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%F0%9F%93%8A%0A*11%20-%3E*%20Extracto%20operacionales%20%20%20%F0%9F%93%92%0A*12%20-%3E*%20Ayuda%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%F0%9F%93%96%20%20%E2%9D%93%0A*13%20-%3E*%20Sobre%20nosotros%20%20%20%20%20%20%20%20%20%20%20%F0%9F%91%AA%20%20%20%C2%A9",
+                "encode_msg": true,
+                "next_status": "500"
+            }
+        },
+        "401": {
+            "confirmation": {
+                "message": "_Actualizamos tu nombre_ ✅\n⚠ *Ahora ingresa tu ciudad actual...*",
+                "encode_msg": false,
+                "next_status": "402"
+            }
+        },
+        "402": {
+            "confirmation": {
+                "message": "_Actualizamos tu ciudad_ ✅\n⚠ *Ahora ingresa tu dirección de correo elétronico (email) actual 📧*",
+                "encode_msg": false,
+                "next_status": "403"
+            }
+        },
+        "403": {
+            "confirmation": {
+                "message": "_Actualizamos tu email_ ✅\n⚠ *Ahora ingresa tu nuevo codigo PIN* _(Ej: 123456)_",
+                "encode_msg": false,
+                "next_status": "405"
+            }
+        },
+        "405": {
+            "confirmation": {
+                "message": "_Actualizamos tu código PIN ✅\n⚠ (Por tu seguridad elimina el mensaje que incluye tu PIN 🔒 )._\n*GRACIAS POR ACTUALIZAR*, Envía *C* para cerrar sassion ",
+                "encode_msg": false,
+                "next_status": "500"
+            }
+        },
+        "2001": {
+            "confirmation": {
+                "message": "Ingresa el numero *telefónico* del receptor 📱",
+                "encode_msg": false,
+                "next_status": "2002"
+            }
+        },
+        "2002": {
+            "confirmation": {
+                "message": "_Telefono correcto_ ✅\nIngresa el *monto*",
+                "encode_msg": false,
+                "next_status": "2003"
+            }
+        },
+        "2003": {
+            "confirmation": {
+                "message": "_Monto correcto_ ✅.\n⚠ Ingresa su *PIN* de confirmacion",
+                "encode_msg": false,
+                "next_status": "2004"
+            }
+        },
+        "2004": {
+            "confirmation": {
+                "message": "_PIN correcto_ ✅. *OPERACION EXITOSA.*\n⚠ _(Por tu seguridad elimina el mensaje del PIN 🔒 )_.\nPuede enviar *Bingo* para ver *MENU*\nPuede enviar *C* para cerrar sassion",
+                "encode_msg": false,
+                "next_status": "500"
+            }
+        },
+        "2005": {
+            "confirmation": {
+                "message": "😀 _Gracias por su transacción, puede pulsar *Bingo* para ver MENU, pulse *C* para cerrar session_",
+                "encode_msg": false,
+                "next_status": "500"
+            }
+        },
+        "3001": {
+            "confirmation": {
+                "message": "Ingresa el *código del envío*: _COD.._",
+                "encode_msg": false,
+                "next_status": "3002"
+            }
+        },
+        "3002": {
+            "confirmation": {
+                "message": "⚠ Confirma el *código del envío*: _COD..._",
+                "encode_msg": false,
+                "next_status": "3003"
+            }
+        },
+        "3003": {
+            "confirmation": {
+                "message": "✔ 💚 *Cobro o pago exitoso, Gracias* 💰",
+                "encode_msg": false,
+                "next_status": "500"
+            }
+        },
+        "4001": {
+            "confirmation": {
+                "message": "Ingresa el *código del envío*: _COD.._",
+                "encode_msg": false,
+                "next_status": "4002"
+            }
+        },
+        "6001": {
+            "confirmation": {
+                "message": "✔ 💚 *Gracias por afiliarse * 💰",
+                "encode_msg": false,
+                "next_status": "500"
+            }
+        },
+        "7001": {
+            "confirmation": {
+                "message": "💶 _Demandando pago de factura_\n*📦 Ingrese el monto:*",
+                "encode_msg": false,
+                "next_status": "7002"
+            }
+        },
+        "7002": {
+            "confirmation": {
+                "message": "✅ _Pago exitoso de factura_",
+                "encode_msg": false,
+                "next_status": "500"
+            }
+        },
+        "8001": {
+            "confirmation": {
+                "message": "📄 _Demandando pago de factura_\n*📦 Ingrese el concepto:*",
+                "encode_msg": false,
+                "next_status": "8002"
+            }
+        },
+        "8002": {
+            "confirmation": {
+                "message": "📎 *ADJUNTA FACTURA EN PDF* _(only)_ :",
+                "encode_msg": false,
+                "next_status": "8003"
+            }
+        },
+        "8003": {
+            "confirmation": {
+                "message": "✅ _Demanda exitosa_",
+                "encode_msg": false,
+                "next_status": "500"
+            }
+        }
+
+
+    }
+}

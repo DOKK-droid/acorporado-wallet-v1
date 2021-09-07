@@ -1,0 +1,41 @@
+{
+    "name": "wa",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon server"
+    },
+    "nodemonConfig": {
+        "ignore": [
+            "*.json"
+        ]
+    },
+    "keywords": [],
+    "author": "Miguel Angel MITUY",
+    "license": "ISC",
+    "devDependencies": {
+        "dotenv": "^8.2.0",
+        "qrcode-terminal": "^0.12.0",
+        "whatsapp-web.js": "^1.12.6"
+    },
+    "dependencies": {
+        "audio-loader": "^1.0.3",
+        "audio-play": "^2.3.1",
+        "audio-sink": "^1.1.6",
+        "awesome-phonenumber": "^2.54.0",
+        "bcrypt": "^5.0.1",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "howler": "^2.2.3",
+        "jimp": "^0.16.1",
+        "mongoose": "^5.12.5",
+        "nodemon": "^2.0.7",
+        "qrcode": "^1.4.4",
+        "qrcode-reader": "^1.0.4",
+        "randomstring": "^1.2.1",
+        "socket.io": "^4.0.1",
+        "twilio": "^3.64.0",
+        "uuid": "^8.3.2"
+    }
+}
