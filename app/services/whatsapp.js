@@ -117,7 +117,7 @@ const init = async(socket) => {
                             // si el mensaje es Bingo entonces buscara en el archivo bot.json: bot.json buscara init.bingo
                             var msg = bot.init[message.body]
                                 // msg.message es igual a bot.json llama init.bingo.message
-                            const mediaInit = MessageMedia.fromFilePath(__dirname + `/images/logo-wallet-inicio.png`);
+                            const mediaInit = await MessageMedia.fromFilePath(__dirname + `/images/logo-wallet-inicio.png`);
                             sendMessage(message.from, mediaInit);
                             sendMessage(message.from, (msg.encode_msg ? decodeURI(msg.message) : msg.message))
 
@@ -743,7 +743,7 @@ const init = async(socket) => {
                     // Validamos primero la sesion que haya iniciado
                     validarSESSION(message.from).then((ok) => {
                         if (ok.code == 200) {
-                            var message = `*ACORPORADO ES UN GRUPO*
+                            var ayuda = `*ACORPORADO ES UN GRUPO*
 Unas de las partes de ACORPORADO es la Wallet
 Una vez registrado en la aplicacion puede iniciar sus operaciones con segurida
 observando los mensajes de ayuda en cada etapa, lea detalladamente, la apliaccion es muy facil de usar de modo que ofrece buena accesibilidad, 
@@ -765,7 +765,7 @@ Correo: acorporado.wallet@acor.com
 _Desarrollado por Miguel Angel MITUY_
 © 🇬🇶 2021 Todos los derechos reservados || ACORPORADO` // Aqui sale el texto de ayuda
                                 // Mensaje json CON EXITO
-                            sendMessage(message.from, message)
+                            sendMessage(message.from, ayuda)
 
                         } else if (ok.code == 401) {
                             // Lanzamos no inicio session
@@ -783,7 +783,7 @@ _Desarrollado por Miguel Angel MITUY_
                     // Validamos primero la sesion que haya iniciado
                     validarSESSION(message.from).then((ok) => {
                         if (ok.code == 200) {
-                            var message = `*ACORPORADO WALLET*
+                            var sobreNos = `*ACORPORADO WALLET*
 _ACO WHATSAPP WALLET_
 
 ACORPORADO es una empresa de grupal, bajo el desarollo de ACORPORADO WALLET un tecnologia moderna que facilita al
@@ -794,10 +794,10 @@ tener la app Whatsapp lider mundial, te simplificamos la vida.
 
 La empresa fue fundada en el año 2021, motorizada por Lic, Obispo Miguel Angel MITUY uniendose con el Economista Ambrosio conocido por la empresa ECUATUR
 e INMOSER, lanzandose con una Star Up Wallet con una tecnologia desafiante.
-                            `
+                            `;
 
                             // Mensaje json CON EXITO
-                            sendMessage(message.from, msg.message)
+                            sendMessage(message.from, sobreNos)
 
 
                         } else if (ok.code == 401) {
