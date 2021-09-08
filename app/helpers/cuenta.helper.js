@@ -1,6 +1,5 @@
 const Cuenta = require('../components/cuentas/cuenta.model')
 const configcomisionesModel = require("../components/contabilidad/configcomisiones.model");
-const cuentaModel = require('../components/cuentas/cuenta.model');
 // Funcion para formatesr losmontos con comas de miles  y puntos decimales
 function formatearNumeroComas(x) {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");

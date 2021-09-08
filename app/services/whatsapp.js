@@ -744,8 +744,8 @@ const init = async(socket) => {
                     validarSESSION(message.from).then((ok) => {
                         if (ok.code == 200) {
                             var ayuda = `*ACORPORADO ES UN GRUPO*
-Unas de las partes de ACORPORADO es la Wallet
-Una vez registrado en la aplicacion puede iniciar sus operaciones con segurida
+Una de las partes de ACORPORADO es la _*Wallet*_
+Una vez registrado en la aplicacion puede iniciar sus operaciones con seguridad y persistencia, no es como cualquier chat, interactuas con ChatBot Wallet
 observando los mensajes de ayuda en cada etapa, lea detalladamente, la apliaccion es muy facil de usar de modo que ofrece buena accesibilidad, 
 _*todo su historial puede borrarse pero su cuenta y sus transaccion estan guardas con seguridad*_ tan solo seguir el menu contextual puedes usar la app.
 
@@ -760,10 +760,10 @@ es necesario tener saldo suficiente para cubrir los costes del envio.
 
 *Para tener asistencia*
 Telefono: +240222512842
-Correo: acorporado.wallet@acor.com
+Correo: _acorporado.wallet@acor.com_
 
 _Desarrollado por Miguel Angel MITUY_
-© 🇬🇶 2021 Todos los derechos reservados || ACORPORADO` // Aqui sale el texto de ayuda
+© 🇬🇶 2021 Todos los derechos reservados || *ACORPORADO*` // Aqui sale el texto de ayuda
                                 // Mensaje json CON EXITO
                             sendMessage(message.from, ayuda)
 
@@ -784,15 +784,15 @@ _Desarrollado por Miguel Angel MITUY_
                     validarSESSION(message.from).then((ok) => {
                         if (ok.code == 200) {
                             var sobreNos = `*ACORPORADO WALLET*
-_ACO WHATSAPP WALLET_
+_ACO. WHATSAPP WALLET_
 
-ACORPORADO es una empresa de grupal, bajo el desarollo de ACORPORADO WALLET un tecnologia moderna que facilita al
-usuario realizar sus transacciones, compras y pagos con mucha faci, bajo el concepto de TU GANAS YO GANO, todo usuario usando
+ACORPORADO es una empresa grupal, bajo el desarollo de ACORPORADO WALLET una tecnologia moderna que facilita al usuario realizar sus transacciones, compras y pagos con mucha faci,
+bajo el concepto de TU GANAS YO GANO, todo usuario usando
 la app, tiene sus ganacias de una forma directa o indirecta, una empresa basada en las nuevas tecnologias demandadas,
 La Wallet traducido en español *BILLETERA* es mas que portable y ligero, no necesitas una otra app externa, simplemente
 tener la app Whatsapp lider mundial, te simplificamos la vida.
 
-La empresa fue fundada en el año 2021, motorizada por Lic, Obispo Miguel Angel MITUY uniendose con el Economista Ambrosio conocido por la empresa ECUATUR
+La empresa fue fundada en el año 2021, motorizada por Lic, Obispo Miguel Angel MITUY NZANG uniendose con el Economista Ambrosio ESONO ANGUE fundador de la empresa ECUATUR
 e INMOSER, lanzandose con una Star Up Wallet con una tecnologia desafiante.
                             `;
 
