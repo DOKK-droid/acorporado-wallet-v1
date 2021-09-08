@@ -101,7 +101,7 @@ const init = async(socket) => {
 
                     // Validamos aqui diferente, debe funcionar solo si no esta logueado
                     // Validamos primero la sesion que haya iniciado
-                    validarSESSION(message.from).then((ok) => {
+                    validarSESSION(message.from).then(async(ok) => {
                         if (ok.code == 200) {
 
                             sendMessage(message.from, '⚠ Tienes la sesión abierta, no puedes usar *Bingo*.\nIngresa *C* para cerrarla')
