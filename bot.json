@@ -116,7 +116,7 @@
         },
         "202": {
             "confirmation": {
-                "message": "🔐 Código PIN válido",
+                "message": "🔐 Código PIN válido ",
                 "encode_msg": false,
                 "next_status": "500"
             }
@@ -165,7 +165,7 @@
         },
         "2002": {
             "confirmation": {
-                "message": "_Telefono correcto_ ✅\nIngresa el *monto*",
+                "message": "_Telefono correcto_ ✅\nIngresa el *monto* 💶",
                 "encode_msg": false,
                 "next_status": "2003"
             }

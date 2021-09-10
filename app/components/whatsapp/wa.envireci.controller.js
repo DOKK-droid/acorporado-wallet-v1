@@ -54,11 +54,13 @@ const enviar = async(codigoEstado, clientMessage, telefono, userId, tipo, ope, n
                     } else {
 
                         // Registramos el numero tel receptor operacion en el model envireci
+                        const descripcion = "ENVIO DE DINERO FRANQ."
                         const data = {
                             referencia: `REF${generador(11)}`,
                             cuentaEmi: telefono,
                             cuentaReci: tel,
                             ope,
+                            descripcion,
                             mensaje: "",
                             codigo: `COD${generador(6)}`,
                             sentido: "D",
@@ -128,7 +130,7 @@ CODIGO: *${depositado.codigo}*
 REFERENCIA: *${depositado.referencia}*
                         
 💰 _Acorporado wallet_ 💰`;
-                        const depositadoSMS = await EnvireciModel.findOneAndUpdate({ cuentaEmi: telefono, sentido: 'D', estado: 'DEPO' }, { mensaje: smsRemitente });
+                        const depositadoSMS = await EnvireciModel.findOneAndUpdate({ cuentaEmi: telefono, sentido: 'D', estado: 'DEPO', cn: 1 }, { mensaje: smsRemitente, cn: 0 });
                         // Buscamos ya la operacion en si para proceder a debitar y acreditar otras cuentas
                         const dataEnvio = await EnvireciModel.findOne({ referencia: depositadoSMS.referencia, cuentaEmi: telefono, });
                         // Debitamos la cuenta del cliente
@@ -141,7 +143,7 @@ REFERENCIA: *${depositado.referencia}*
                             // VENTILAR CUENTAS INTERNAS DE LA EMPRESA MANDANDO SUS COMISIONES
                         await Cuenta.findOneAndUpdate({ descripcion: 'CUENTA_IN_COMISION_ENVIOS' }, { saldo: getSaldoComisEmpresa.saldo + dataEnvio.comisionEmpresa })
                             // Ahora registramos la operacion como C= Credito disponible para el retiro del Beneficiario
-
+                        const descripcion = "ENVIO DE DINERO FRANQ."
                         const data = {
                             referencia: dataEnvio.referencia,
                             cuentaEmi: telefono,
@@ -149,6 +151,7 @@ REFERENCIA: *${depositado.referencia}*
                             ope: dataEnvio.ope,
                             monto: dataEnvio.monto,
                             comisionReceptor: dataEnvio.comisionReceptor,
+                            descripcion,
                             mensaje: `Ha recicibo un envio de parte de *${nombreCompleto}:*
 REMITENTE: *${soloTelefono(dataEnvio.cuentaEmi)}*
 MONTO: *${formatearNumeroComas(dataEnvio.monto)} XAF*
@@ -214,11 +217,13 @@ REFERENCIA: _${dataEnvio.referencia}_
                 if (tel) { // Validamos el numero introducido
 
                     // Registramos el numero tel receptor operacion en el model envireci
+                    const descripcion = "ENVIO DE DINERO NORM."
                     const data = {
                         referencia: `REF${generador(11)}`,
                         cuentaEmi: telefono,
                         cuentaReci: tel,
                         ope,
+                        descripcion,
                         mensaje: "",
                         codigo: `COD${generador(6)}`,
                         sentido: "D",
@@ -285,12 +290,12 @@ CODIGO: *${depositado.codigo}*
 REFERENCIA: *${depositado.referencia}*
                         
 💰 _Acorporado wallet_ 💰`;
-                        const depositadoSMS = await EnvireciModel.findOneAndUpdate({ cuentaEmi: telefono, sentido: 'D', estado: 'DEPO' }, { mensaje: smsRemitente });
+
+                        const depositadoSMS = await EnvireciModel.findOneAndUpdate({ cuentaEmi: telefono, sentido: 'D', estado: 'DEPO', cn: 1 }, { mensaje: smsRemitente, cn: 0 });
                         // Buscamos ya la operacion en si para proceder a debitar y acreditar otras cuentas
-                        const dataEnvio = await EnvireciModel.findOne({ referencia: depositadoSMS.referencia, cuentaEmi: telefono, });
+                        const dataEnvio = await EnvireciModel.findOne({ referencia: depositadoSMS.referencia, cuentaEmi: telefono });
                         // Debitamos la cuenta del cliente
                         let getSaldo = await Cuenta.findOne({ cuenta: telefono, descripcion: 'CUENTA_NORMAL' });
-                        let getSaldoComisCliente = await Cuenta.findOne({ cuenta: telefono, descripcion: 'CUENTA_COMISIONES' });
                         let getSaldoComisEmpresa = await Cuenta.findOne({ descripcion: 'CUENTA_IN_COMISION_ENVIOS' });
                         const resta = parseInt(getSaldo.saldo) - parseInt(dataEnvio.monto + dataEnvio.comisionEmpresa + dataEnvio.comisionRemitente + dataEnvio.comisionReceptor)
                         await Cuenta.findOneAndUpdate({ cuenta: telefono, descripcion: 'CUENTA_NORMAL' }, { saldo: resta })
@@ -298,7 +303,7 @@ REFERENCIA: *${depositado.referencia}*
                         // VENTILAR CUENTAS INTERNAS DE LA EMPRESA MANDANDO SUS COMISIONES
                         await Cuenta.findOneAndUpdate({ descripcion: 'CUENTA_IN_COMISION_ENVIOS' }, { saldo: getSaldoComisEmpresa.saldo + dataEnvio.comisionEmpresa + dataEnvio.comisionReceptor })
                             // Ahora registramos la operacion como C= Credito disponible para el retiro del Beneficiario
-
+                        const descripcion = "ENVIO DE DINERO NORM."
                         const data = {
                             referencia: dataEnvio.referencia,
                             cuentaEmi: telefono,
@@ -306,6 +311,7 @@ REFERENCIA: *${depositado.referencia}*
                             ope: dataEnvio.ope,
                             monto: dataEnvio.monto,
                             comisionReceptor: dataEnvio.comisionReceptor,
+                            descripcion,
                             mensaje: `Ha recicibo un envio de parte de *${nombreCompleto}:*
 REMITENTE: *${soloTelefono(dataEnvio.cuentaEmi)}*
 MONTO: *${formatearNumeroComas(dataEnvio.monto)} XAF*
@@ -343,10 +349,7 @@ REFERENCIA: _${dataEnvio.referencia}_
                 payload = { code: 404 };
         }
 
-
-
     }
-
 
     return payload;
 

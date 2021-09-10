@@ -19,6 +19,7 @@ const envireciSchema = new mongoose.Schema({
         default: 'ENCURSO',
         emun: ['DEPO', 'PAGADO', 'ENCURSO']
     },
+    cn: { type: Number, default: 1 },
     pagadoPor: String,
     ultimaActualizacion: { type: Date, default: Date.now }
 }, { timestamps: true });
