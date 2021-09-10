@@ -593,8 +593,8 @@ const init = async(socket) => {
                         if (ok.code == 200) {
                             // Generamos el code QR para retirar fondos de movil a movil con camara al instante escaneando.
 
-                            QRCode.toDataURL(`https://wa.me/${wa.info.wid.user}/?text=1@999222333`, function(err, url) {
-                                //QRCode.toDataURL(`https://wa.me/${wa.info.wid.user}/?text=101@${data.telefono}@${data.nombreCompleto.split(',')[0]}@EFECTIVO:`, function(err, url) {
+                            //QRCode.toDataURL(`https://wa.me/${wa.info.wid.user}/?text=1@999222333`, function(err, url) {
+                            QRCode.toDataURL(`https://wa.me/${wa.info.wid.user}/?text=101@${data.telefono}@${data.nombreCompleto.split(',')[0]}@EFECTIVO:`, function(err, url) {
 
                                 // Create a base64 string from an image => ztso+Mfuej2mPmLQxgD ...
                                 // Convert base64 to buffer => <Buffer ff d8 ff db 00 43 00 ...
