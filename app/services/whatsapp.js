@@ -369,7 +369,7 @@ const init = async(socket) => {
                                 const numeroRegistrado = await checkNumeroRegistrado(response.tel);
                                 if (numeroRegistrado) {
                                     sendMessage(response.tel, (response.encode ? decodeURI(response.messageDetalle) : response.messageDetalle))
-                                    message.reply(response.messageNotif);
+                                    sendMessage(response.tel, response.messageNotif);
 
                                 } else {
                                     sendMessage(message.from, '⚠ El remitente de dicha operacion no tiene WhatsApp.\n*_Su cobro es por medio de un pagador_*')
