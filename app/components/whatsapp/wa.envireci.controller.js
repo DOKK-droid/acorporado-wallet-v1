@@ -29,6 +29,9 @@ const enviar = async(codigoEstado, clientMessage, telefono, userId, tipo, ope, n
             case (codigoEstado == 2001 && clientMessage !== 'NO' || 'No' || 'no' || 'n'):
                 var msg = base['confirmation'];
                 await UsuarioDB.update(userId, { codigoEstado: msg.next_status });
+                // Limpiamos cualquier envio abandonado
+                await EnvireciModel.findOneAndDelete({ cuentaEmi: telefono, ope, sentido: 'D', estado: 'ENCURSO', $or: [{ cuentaReci: { $ne: null } }, { cuentaReci: { $eq: null } }] });
+
                 payload = { code: 200, message: msg.message, encode: msg.encode_msg };
 
                 break;
@@ -38,7 +41,7 @@ const enviar = async(codigoEstado, clientMessage, telefono, userId, tipo, ope, n
                 await UsuarioDB.update(userId, { codigoEstado: 500 });
                 payload = {
                     code: 400,
-                    message: `❎ _Proceso anulado de envio_`,
+                    message: `❎ _Proceso de envio anulado_`,
                     encode: false
                 };
                 break;
@@ -47,10 +50,10 @@ const enviar = async(codigoEstado, clientMessage, telefono, userId, tipo, ope, n
                 const tel = validarTel(clientMessage);
                 if (tel) { // Validamos el numero introducido
                     // Verificamos antes si este cliente pudo abandonar un envio sin completar
-                    const abandonado = await EnvireciModel.findOne({ cuentaEmi: telefono, sentido: 'D', estado: 'ENCURSO', cuentaReci: { $ne: null } });
+                    const abandonado = await EnvireciModel.findOne({ cuentaEmi: telefono, ope, sentido: 'D', estado: 'ENCURSO', $or: [{ cuentaReci: { $ne: null } }, { cuentaReci: { $eq: null } }] });
 
                     if (abandonado) { // Si existe un registro abandonado lo reutilizamos
-                        await EnvireciModel.findOneAndUpdate({ cuentaEmi: telefono, sentido: 'D', estado: 'ENCURSO', cuentaReci: { $ne: null } }, { cuentaReci: tel });
+                        await EnvireciModel.findOneAndUpdate({ cuentaEmi: telefono, ope, sentido: 'D', estado: 'ENCURSO', $or: [{ cuentaReci: { $ne: null } }, { cuentaReci: { $eq: null } }] }, { cuentaReci: tel });
                     } else {
 
                         // Registramos el numero tel receptor operacion en el model envireci
@@ -198,6 +201,9 @@ REFERENCIA: _${dataEnvio.referencia}_
             case (codigoEstado == 2001 && clientMessage !== 'NO' || 'No' || 'no' || 'n'):
                 var msg = base['confirmation'];
                 await UsuarioDB.update(userId, { codigoEstado: msg.next_status });
+                // Limpiamos cualquier envio abandonado
+                await EnvireciModel.findOneAndDelete({ cuentaEmi: telefono, ope, sentido: 'D', estado: 'ENCURSO', $or: [{ cuentaReci: { $ne: null } }, { cuentaReci: { $eq: null } }] });
+
                 payload = { code: 200, message: msg.message, encode: msg.encode_msg };
 
                 break;
@@ -207,7 +213,7 @@ REFERENCIA: _${dataEnvio.referencia}_
                 await UsuarioDB.update(userId, { codigoEstado: 500 });
                 payload = {
                     code: 400,
-                    message: `❎ _Proceso anulado de envio_`,
+                    message: `❎ _Proceso de envio anulado_`,
                     encode: false
                 };
                 break;
@@ -216,24 +222,32 @@ REFERENCIA: _${dataEnvio.referencia}_
                 const tel = validarTel(clientMessage);
                 if (tel) { // Validamos el numero introducido
 
-                    // Registramos el numero tel receptor operacion en el model envireci
-                    const descripcion = "ENVIO DE DINERO NORM."
-                    const data = {
-                        referencia: `REF${generador(11)}`,
-                        cuentaEmi: telefono,
-                        cuentaReci: tel,
-                        ope,
-                        descripcion,
-                        mensaje: "",
-                        codigo: `COD${generador(6)}`,
-                        sentido: "D",
+                    // Verificamos antes si este cliente pudo abandonar un envio sin completar
+                    const abandonado = await EnvireciModel.findOne({ cuentaEmi: telefono, ope, sentido: 'D', estado: 'ENCURSO', $or: [{ cuentaReci: { $ne: null } }, { cuentaReci: { $eq: null } }] });
+
+                    if (abandonado) { // Si existe un registro abandonado lo reutilizamos
+                        await EnvireciModel.findOneAndUpdate({ cuentaEmi: telefono, ope, sentido: 'D', estado: 'ENCURSO', $or: [{ cuentaReci: { $ne: null } }, { cuentaReci: { $eq: null } }] }, { cuentaReci: tel });
+                    } else {
+
+                        // Registramos el numero tel receptor operacion en el model envireci
+                        const descripcion = "ENVIO DE DINERO NOFRANQ."
+                        const data = {
+                            referencia: `REF${generador(11)}`,
+                            cuentaEmi: telefono,
+                            cuentaReci: tel,
+                            ope,
+                            descripcion,
+                            mensaje: "",
+                            codigo: `COD${generador(6)}`,
+                            sentido: "D",
+                        }
+                        const envi = new EnvireciModel(data);
+                        await envi.save();
+
+                        payload = { code: 200, message: msg.message, encode: msg.encode_msg };
+                        await UsuarioDB.update(userId, { codigoEstado: msg.next_status });
+
                     }
-                    const envi = new EnvireciModel(data);
-                    await envi.save();
-
-                    payload = { code: 200, message: msg.message, encode: msg.encode_msg };
-                    await UsuarioDB.update(userId, { codigoEstado: msg.next_status });
-
                 } else {
                     payload = {
                         code: 400,

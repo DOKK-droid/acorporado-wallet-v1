@@ -8,5 +8,5 @@ git commit -m "Texto de modificacion"
 git push
 git push heroku main
 
-Desactivarlo el sitio en heroku:
+Desactivarlo en el sitio en heroku:
 heroku ps:scale web=0
