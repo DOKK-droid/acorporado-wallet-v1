@@ -7,27 +7,21 @@ const authToken = 'f7b1cdd1bb25858c662cc48b228ef837'
 
 const client = new twilio(accountSid, authToken)
 
-const createSMS = () => {
+const crearSMSNormal = (para, sms) => {
 
     client.messages.create({
-            to: '+240222512842',
+            to: `+${para}`,
             from: '+15092959211',
-            body: `Ha recicibo un envio de parte de Test:
-REMITENTE: 240222512842
-MONTO: 5,000 XAF
-CODIGO: COD638898
-REFERENCIA: REF12864458671
-        
-💰 Acorporado wallet 💰`,
+            body: sms,
         })
         .then(message => console.log(message.sid))
         .catch(err => {
-            console.log('ALGO SUCEDE ==> ', err)
+            console.log('ALGO SUCEDE MAL ==> ', err)
         });
 
 }
 
 
 module.exports = {
-    createSMS
+    crearSMSNormal
 }

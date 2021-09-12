@@ -8,6 +8,7 @@ const { validarTel } = require('../../helpers/usuarios.helper');
 const { verificarSaldo, formatearNumeroComas, soloTelefono } = require("../../helpers/cuenta.helper");
 const { generador } = require("../../helpers/contabilidad.helper");
 const EnvireciModel = require("../contabilidad/envireci.model");
+const { crearSMSNormal } = require("../../helpers/SMS");
 
 
 // Realizar envio de dinero, TIPO es ref de comision a tratar
@@ -171,6 +172,12 @@ REFERENCIA: _${dataEnvio.referencia}_
                         await UsuarioDB.update(userId, { codigoEstado: msg.next_status })
                             // Mandamos este tel: data.cuentaReci para que reciba el beneficiario este sms si tiene whatsapp
                             // EN EL FUTURO SE DEBE MANDARLE SMS NORMAL AL MOVIL SI NO TIENE WHATSAPP O INCLUSIVE
+                            // SMS para el beneficiario
+                        let telB = data.cuentaReci;
+                        crearSMSNormal(telB.split('@')[0], data.mensaje)
+                            // SMS para el que 
+                        let telA = telefono;
+                        crearSMSNormal(telA.split('@')[0], smsRemitente)
                             // Pasamos en el payload todos los mensajes a recibir segun proceso
                         payload = { code: 200, message: msg.message, messageRemitente: smsRemitente, messageReceptor: data.mensaje, encode: msg.encode_msg, tel: data.cuentaReci };
 
@@ -343,6 +350,12 @@ REFERENCIA: _${dataEnvio.referencia}_
                         await UsuarioDB.update(userId, { codigoEstado: msg.next_status })
                             // Mandamos este tel: data.cuentaReci para que reciba el beneficiario este sms si tiene whatsapp
                             // EN EL FUTURO SE DEBE MANDARLE SMS NORMAL AL MOVIL SI NO TIENE WHATSAPP O INCLUSIVE
+                            // SMS para el beneficiario
+                        let telB = data.cuentaReci;
+                        crearSMSNormal(telB.split('@')[0], data.mensaje)
+                            // SMS para el que 
+                        let telA = telefono;
+                        crearSMSNormal(telA.split('@')[0], smsRemitente)
                             // Pasamos en el payload todos los mensajes a recibir segun proceso
                         payload = { code: 200, message: msg.message, messageRemitente: smsRemitente, messageReceptor: data.mensaje, encode: msg.encode_msg, tel: data.cuentaReci };
 
