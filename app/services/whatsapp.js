@@ -16,7 +16,7 @@ const { pagarServicio } = require('../components/whatsapp/wa.servicio.controller
 const { recibirPagoFactura, pagarFactura } = require('../components/whatsapp/wa.pagofactura.controller');
 
 
-const SESSION_FILE_PATH = __dirname + '/sessions/wa-session.json'
+const SESSION_FILE_PATH = '/services/sessions/wa-session.json'
 console.log(SESSION_FILE_PATH)
 console.log(__dirname)
 
