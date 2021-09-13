@@ -179,7 +179,7 @@
         },
         "2004": {
             "confirmation": {
-                "message": "_PIN correcto_ ✅. *OPERACION EXITOSA.*\n⚠ _(Por tu seguridad elimina el mensaje del PIN 🔒 )_.\nPuede enviar *Bingo* para ver *MENU*\nPuede enviar *C* para cerrar sassion",
+                "message": "_PIN correcto_ ✅. *OPERACION EXITOSA.*\n⚠ _(Por tu seguridad elimina el mensaje del PIN 🔒 )_ .\nPuede enviar *Bingo* para ver *MENU*\nPuede enviar *C* para cerrar sassion",
                 "encode_msg": false,
                 "next_status": "500"
             }
