@@ -18,7 +18,7 @@
             "next_status": "401"
         },
         "1": {
-            "message": "✔ 💚 *Operación exitosa.\nGracias por la recarga 💳",
+            "message": "✔ 💚 *Operación exitosa*.\nGracias por la recarga 💳",
             "encode_msg": false,
             "is_input": true,
             "next_status": "500"
@@ -88,7 +88,7 @@
         },
         "102": {
             "confirmation": {
-                "message": "_Registramos tu ciudad_ ✅\n*Ahora ingresa tu dirección de correo elétronico (email) 📧*",
+                "message": "_Registramos tu ciudad_ ✅\n*Ahora ingresa tu dirección de correo elétronico (email)* 📧",
                 "encode_msg": false,
                 "next_status": "103"
             }
@@ -102,7 +102,7 @@
         },
         "104": {
             "confirmation": {
-                "message": "_Registramos tu código PIN ✅\n⚠ (Por tu seguridad elimina el mensaje que incluye tu PIN 🔒)._\n*GRACIAS POR REGISTRARTE*,\nIngresa *S* para Iniciar Sesión",
+                "message": "_Registramos tu código PIN_ ✅\n⚠ _(Por tu seguridad elimina el mensaje que incluye tu PIN)_ 🔒\n*GRACIAS POR REGISTRARTE*,\nIngresa *S* para Iniciar Sesión",
                 "encode_msg": false,
                 "next_status": "201"
             }
@@ -137,7 +137,7 @@
         },
         "402": {
             "confirmation": {
-                "message": "_Actualizamos tu ciudad_ ✅\n⚠ *Ahora ingresa tu dirección de correo elétronico (email) actual 📧*",
+                "message": "_Actualizamos tu ciudad_ ✅\n⚠ *Ahora ingresa tu dirección de correo elétronico (email) actual* 📧",
                 "encode_msg": false,
                 "next_status": "403"
             }

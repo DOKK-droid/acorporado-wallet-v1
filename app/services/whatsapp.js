@@ -16,7 +16,7 @@ const { pagarServicio } = require('../components/whatsapp/wa.servicio.controller
 const { recibirPagoFactura, pagarFactura } = require('../components/whatsapp/wa.pagofactura.controller');
 
 
-const SESSION_FILE_PATH = '/services/sessions/wa-session.json'
+const SESSION_FILE_PATH = '../services/sessions/wa-session.json'
 console.log(SESSION_FILE_PATH)
 console.log(__dirname)
 
@@ -145,7 +145,7 @@ const init = async(socket) => {
                     // Si esta estaRegistrado y solicita R para registrarse
                 case (data.estaRegistrado && message.body == 'R'):
                     // https://es.piliapp.com/emoji/list/ PARA LOS EMOJITOS ICONOS
-                    sendMessage(message.from, ' ✅ En el sistema ya esta registrado tu número, ingresa *S* para continuar')
+                    sendMessage(message.from, ' ✅ En la app ya esta registrado tu número, ingresa *S* para continuar')
                     break;
 
 
@@ -170,7 +170,7 @@ const init = async(socket) => {
 
                     // Si no esta Registrado y desea iniciar sesión con S
                 case (!data.estaRegistrado && message.body == 'S'):
-                    sendMessage(message.from, '❌ En la base de datos aún no estas registrado, ingresa *R* para continuar')
+                    sendMessage(message.from, '❌ En la app aún no estas registrado, ingresa *R* para continuar')
                     break;
 
                     // Si esta Registrado, desea iniciar sesión
@@ -203,7 +203,7 @@ const init = async(socket) => {
 
                     // Si no esta Registrado y desea cambiar sus Datos
                 case (!data.estaRegistrado && message.body == 'CM'):
-                    sendMessage(message.from, '❌ En la base de datos aún no estas registrado, ingresa *R* para continuar')
+                    sendMessage(message.from, '❌ En la app aún no estas registrado, ingresa *R* para continuar')
                     break;
 
                     // El CM representa cambiar datos de usuario Nombre, Ciudad correo y PIN
@@ -220,7 +220,7 @@ const init = async(socket) => {
 
                         })
                         .catch(e => {
-                            sendMessage(message.from, '❌ Debes iniciar sesion primero para cambiar sus datos, ingresa *S* para continuar o *Bingo*')
+                            sendMessage(message.from, '❌ Debe iniciar sesion primero para cambiar sus datos, ingresa *S* para continuar o *Bingo*')
                         })
                     break;
 
@@ -322,7 +322,7 @@ const init = async(socket) => {
                                 if (numeroRegistrado) {
                                     sendMessage(response.tel, (response.encode ? decodeURI(response.messageReceptor) : response.messageReceptor))
                                 } else {
-                                    sendMessage(message.from, '⚠ El beneficiario no tiene WhatsApp.\n*_Su cobro es por medio de un pagador_*')
+                                    sendMessage(message.from, '⚠ El beneficiario no tiene WhatsApp.\n_*Su cobro es por medio de un pagador*_')
                                 }
                             }
 
@@ -374,7 +374,7 @@ const init = async(socket) => {
                                     sendMessage(response.tel, response.messageNotif);
 
                                 } else {
-                                    sendMessage(message.from, '⚠ El remitente de dicha operacion no tiene WhatsApp.\n*_Su cobro es por medio de un pagador_*')
+                                    sendMessage(message.from, '⚠ El remitente de dicha operacion no tiene WhatsApp.\n_*Su cobro es por medio de un pagador*_')
                                 }
                             }
 
