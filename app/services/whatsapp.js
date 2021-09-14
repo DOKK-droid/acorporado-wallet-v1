@@ -60,6 +60,7 @@ const init = async(socket) => {
         qrcode.toDataURL(qr, (err, url) => {
             socket.emit('qr', url);
             socket.emit('message', 'Codigo QR recibido, escanea por favor!');
+            console.log(__dirname)
         })
     })
     wa.on('ready', () => {
