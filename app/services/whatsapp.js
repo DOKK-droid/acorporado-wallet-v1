@@ -16,10 +16,7 @@ const { pagarServicio } = require('../components/whatsapp/wa.servicio.controller
 const { recibirPagoFactura, pagarFactura } = require('../components/whatsapp/wa.pagofactura.controller');
 
 
-const SESSION_FILE_PATH = './wa-session.json'
-console.log(SESSION_FILE_PATH)
-console.log(__dirname)
-
+const SESSION_FILE_PATH = __dirname + '/sessions/wa-session.json'
 let sessionData
 
 if (fs.existsSync(SESSION_FILE_PATH)) { sessionData = require(SESSION_FILE_PATH) }
@@ -41,7 +38,6 @@ const wa = new Client({
     session: sessionData
 })
 
-
 const init = async(socket) => {
 
     wa.on('authenticated', (session) => {
@@ -54,13 +50,14 @@ const init = async(socket) => {
             }
         });
     })
+
     wa.on('qr', qr => {
         console.log(qr)
         socket.emit('init', qr)
         qrcode.toDataURL(qr, (err, url) => {
             socket.emit('qr', url);
             socket.emit('message', 'Codigo QR recibido, escanea por favor!');
-            console.log(__dirname)
+
         })
     })
     wa.on('ready', () => {

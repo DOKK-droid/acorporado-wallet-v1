@@ -144,7 +144,7 @@
         },
         "403": {
             "confirmation": {
-                "message": "_Actualizamos tu email_ ✅\n⚠ *Ahora ingresa tu nuevo codigo PIN* _(Ej: 123456)_",
+                "message": "_Actualizamos tu email_ ✅\n⚠ *Ahora ingresa tu nuevo codigo PIN* _(ej: 123456)_",
                 "encode_msg": false,
                 "next_status": "405"
             }
@@ -158,14 +158,14 @@
         },
         "2001": {
             "confirmation": {
-                "message": "Ingresa el numero *telefónico* del receptor 📱",
+                "message": "Ingresa el numero *telefónico* del receptor 📱  2⃣ 2⃣ 2⃣ o  5⃣ 5⃣ 5⃣",
                 "encode_msg": false,
                 "next_status": "2002"
             }
         },
         "2002": {
             "confirmation": {
-                "message": "_Telefono correcto_ ✅\nIngresa el *monto* 💶",
+                "message": "_Telefono correcto_ ✅\n*Ingresa el monto* 💶",
                 "encode_msg": false,
                 "next_status": "2003"
             }
