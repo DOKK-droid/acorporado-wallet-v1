@@ -14,12 +14,13 @@ const { validarSESSION } = require('../middlewares/validar-session-jwt');
 const { enviar, recibir } = require('../components/whatsapp/wa.envireci.controller');
 const { pagarServicio } = require('../components/whatsapp/wa.servicio.controller');
 const { recibirPagoFactura, pagarFactura } = require('../components/whatsapp/wa.pagofactura.controller');
+const { guardarSession, cargarSession } = require('../helpers/db-session');
 
-
+// Controlams si existe una sesion en el archivo.
 const SESSION_FILE_PATH = __dirname + '/sessions/wa-session.json'
-let sessionData
-
+let sessionData;
 if (fs.existsSync(SESSION_FILE_PATH)) { sessionData = require(SESSION_FILE_PATH) }
+
 const wa = new Client({
     restartOnAuthFail: true,
     puppeteer: {
@@ -31,24 +32,32 @@ const wa = new Client({
             '--disable-accelerated-2d-canvas',
             '--no-first-run',
             '--no-zygote',
-            '--single-process', // <- this one doesn't works in Windows
-            '--disable-gpu'
+            '--single-process', // <- this one doesn't works in Windows: +573023714981
+            '--disable-gpu',
+            '--use-gl=egl'
         ],
-    },
-    session: sessionData
-})
+    }, // Ya que algunas paginas de alojamiento nodejs etc, o no usan algunos packages o sucede como lo de heroku, lo que te recomendaria, seria continuar tu proyecto desde la computadora cuando lo finalices podrias comprar una vps o abrir puertos y alojarlo en tu computadora. voy a ver k hacer con este bloqueo, creo que heroku vende un plan que no reinicia tu proyecto, ok, si gustas te paso mi contacto de whatsapp ???? pasame, +57
 
-const init = async(socket) => {
+    session: sessionData,
+
+    //SE DEBE USAR ESTE VALOR AQUI. SE DEBE ESCANEAR UNA VEZ Y GUARDARLO EN MONGO, LA FUNCION DE GUARDAR EN MONGO FUNCIONA BIEN
+    // PERO LA FUNCION DE CONSULTAR LO GUARDADO PARA REUTILIZARLO SOLO LLEGA HASTA
+});
+
+//console.log(wa.options.session)
+
+const init = async(socket) => { //Esto es lo primero que se ejecuta al iniciar la app?
 
     wa.on('authenticated', (session) => {
         socket.emit('authenticated', 'Whatsapp se ha iniciado sesion!');
         socket.emit('message', 'Whatsapp ha iniciado sesion!')
         sessionData = session;
-        fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), function(err) {
+        fs.writeFileSync(SESSION_FILE_PATH, JSON.stringify(session), function(err) {
             if (err) {
                 console.error(err);
             }
         });
+
     })
 
     wa.on('qr', qr => {
@@ -744,26 +753,26 @@ const init = async(socket) => {
                     validarSESSION(message.from).then((ok) => {
                         if (ok.code == 200) {
                             var ayuda = `*ACORPORADO ES UN GRUPO*
-Una de las partes de ACORPORADO es la _*Wallet*_
-Una vez registrado en la aplicacion puede iniciar sus operaciones con seguridad y persistencia, no es como cualquier chat, interactuas con ChatBot Wallet
-observando los mensajes de ayuda en cada etapa, lea detalladamente, la apliaccion es muy facil de usar de modo que ofrece buena accesibilidad, 
-_*todo su historial puede borrarse pero su cuenta y sus transaccion estan guardas con seguridad*_ tan solo seguir el menu contextual puedes usar la app.
-
-*OPCION #1*
-Envia 1@ para recargar saldo, lleva la composicion *1@codigotarjeta* si es que su movil no puede escanear el codigo QR
-en este caso si puede, recargar es facil, raspar tarjeta y escanear el codio QR, luego envia lo presente en el campo de
-texto.
-
-*OPCION #2*
-Es la parte de envio de dinero a cualquier persona, dispone de notificacion SMS normal y codigo de la transaccion,
-es necesario tener saldo suficiente para cubrir los costes del envio.
-
-*Para tener asistencia*
-Telefono: +240222512842
-Correo: _acorporado.wallet@acor.com_
-
-_Desarrollado por Miguel Angel MITUY_
-© 🇬🇶 2021 Todos los derechos reservados || *ACORPORADO*` // Aqui sale el texto de ayuda
+    Una de las partes de ACORPORADO es la _*Wallet*_
+    Una vez registrado en la aplicacion puede iniciar sus operaciones con seguridad y persistencia, no es como cualquier chat, interactuas con ChatBot Wallet
+    observando los mensajes de ayuda en cada etapa, lea detalladamente, la apliaccion es muy facil de usar de modo que ofrece buena accesibilidad, 
+    _*todo su historial puede borrarse pero su cuenta y sus transaccion estan guardas con seguridad*_ tan solo seguir el menu contextual puedes usar la app.
+    
+    *OPCION #1*
+    Envia 1@ para recargar saldo, lleva la composicion *1@codigotarjeta* si es que su movil no puede escanear el codigo QR
+    en este caso si puede, recargar es facil, raspar tarjeta y escanear el codio QR, luego envia lo presente en el campo de
+    texto.
+    
+    *OPCION #2*
+    Es la parte de envio de dinero a cualquier persona, dispone de notificacion SMS normal y codigo de la transaccion,
+    es necesario tener saldo suficiente para cubrir los costes del envio.
+    
+    *Para tener asistencia*
+    Telefono: +240222512842
+    Correo: _acorporado.wallet@acor.com_
+    
+    _Desarrollado por Miguel Angel MITUY_
+    © 🇬🇶 2021 Todos los derechos reservados || *ACORPORADO*` // Aqui sale el texto de ayuda
                                 // Mensaje json CON EXITO
                             sendMessage(message.from, ayuda)
 
@@ -784,17 +793,17 @@ _Desarrollado por Miguel Angel MITUY_
                     validarSESSION(message.from).then((ok) => {
                         if (ok.code == 200) {
                             var sobreNos = `*ACORPORADO WALLET*
-_ACO. WHATSAPP WALLET_
-
-ACORPORADO es una empresa grupal, bajo el desarollo de ACORPORADO WALLET una tecnologia moderna que facilita al usuario realizar sus transacciones, compras y pagos con mucha faci,
-bajo el concepto de TU GANAS YO GANO, todo usuario usando
-la app, tiene sus ganacias de una forma directa o indirecta, una empresa basada en las nuevas tecnologias demandadas,
-La Wallet traducido en español *BILLETERA* es mas que portable y ligero, no necesitas una otra app externa, simplemente
-tener la app Whatsapp lider mundial, te simplificamos la vida.
-
-La empresa fue fundada en el año 2021, motorizada por Lic, Obispo Miguel Angel MITUY NZANG uniendose con el Economista Ambrosio ESONO ANGUE fundador de la empresa ECUATUR
-e INMOSER, lanzandose con una Star Up Wallet con una tecnologia desafiante.
-                            `;
+    _ACO. WHATSAPP WALLET_
+    
+    ACORPORADO es una empresa grupal, bajo el desarollo de ACORPORADO WALLET una tecnologia moderna que facilita al usuario realizar sus transacciones, compras y pagos con mucha faci,
+    bajo el concepto de TU GANAS YO GANO, todo usuario usando
+    la app, tiene sus ganacias de una forma directa o indirecta, una empresa basada en las nuevas tecnologias demandadas,
+    La Wallet traducido en español *BILLETERA* es mas que portable y ligero, no necesitas una otra app externa, simplemente
+    tener la app Whatsapp lider mundial, te simplificamos la vida.
+    
+    La empresa fue fundada en el año 2021, motorizada por Lic, Obispo Miguel Angel MITUY NZANG uniendose con el Economista Ambrosio ESONO ANGUE fundador de la empresa ECUATUR
+    e INMOSER, lanzandose con una Star Up Wallet con una tecnologia desafiante.
+                                `;
 
                             // Mensaje json CON EXITO
                             sendMessage(message.from, sobreNos)
@@ -870,5 +879,7 @@ function sendMessage(client, message) {
 
     wa.sendMessage(client, message)
 }
+
+
 
 module.exports = { init, sendMessage }

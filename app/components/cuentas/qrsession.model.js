@@ -6,9 +6,8 @@ const QRSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 QRSchema.methods.toJSON = function() {
-    const { __v, _id, ...sesion } = this.toObject();
-    sesion.uid = _id;
-    return sesion;
+    const { __v, _id, ...sesions } = this.toObject();
+    return sesions;
 }
 
 module.exports = mongoose.model('Qrsesion', QRSchema)
