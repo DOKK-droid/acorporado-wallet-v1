@@ -1,5 +1,6 @@
 require('dotenv').config() // Este sirve para leer el archivo .env
 const express = require('express') // Se llama express
+const axios = require('axios');
 const app = express()
 const server = require('http').Server(app) // Se crea el servidor
 const { Server } = require("socket.io")
@@ -10,8 +11,7 @@ require('./db') // Llamamos la conexión a la base de datos
 
 // Control de actividadheroku
 
-const request = require('request');
-const ping = () => request('https://acorporado-wa.herokuapp.com/', (error, response, body) => {
+const ping = () => axios('https://acorporado-wa.herokuapp.com/', (error, response, body) => {
     console.log('Error actividad:', error); // Print the error if one occurred
     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
     console.log('body:', body); // Print body of response received

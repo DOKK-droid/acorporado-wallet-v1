@@ -16,29 +16,36 @@ const { pagarServicio } = require('../components/whatsapp/wa.servicio.controller
 const { recibirPagoFactura, pagarFactura } = require('../components/whatsapp/wa.pagofactura.controller');
 const { guardarSession, cargarSession } = require('../helpers/db-session');
 
-const wa = cargarSession().then(sessionData => {
-    console.log('var session', sessionData)
-    let wab = new Client({
-        restartOnAuthFail: true,
-        puppeteer: {
-            headless: true,
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-accelerated-2d-canvas',
-                '--no-first-run',
-                '--no-zygote',
-                '--single-process', // <- this one doesn't works in Windows: +573023714981
-                '--disable-gpu',
-                '--use-gl=egl'
-            ],
-        },
-        session: sessionData
-    });
+(async() => {
+    var sessionData = await cargarSession();
     console.log('Ok var session', sessionData);
-    console.log('Ok var wa', wab);
-    return wab;
+})();
+
+// Controlams si existe una sesion en el archivo.
+const SESSION_FILE_PATH = __dirname + '/sessions/wa-session.json'
+let sessionData;
+if (fs.existsSync(SESSION_FILE_PATH)) { sessionData = require(SESSION_FILE_PATH) }
+const wa = new Client({
+    restartOnAuthFail: true,
+    puppeteer: {
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process', // <- this one doesn't works in Windows: +573023714981
+            '--disable-gpu',
+            '--use-gl=egl'
+        ],
+    }, // Ya que algunas paginas de alojamiento nodejs etc, o no usan algunos packages o sucede como lo de heroku, lo que te recomendaria, seria continuar tu proyecto desde la computadora cuando lo finalices podrias comprar una vps o abrir puertos y alojarlo en tu computadora. voy a ver k hacer con este bloqueo, creo que heroku vende un plan que no reinicia tu proyecto, ok, si gustas te paso mi contacto de whatsapp ???? pasame, +57
+
+    session: sessionData,
+
+    //SE DEBE USAR ESTE VALOR AQUI. SE DEBE ESCANEAR UNA VEZ Y GUARDARLO EN MONGO, LA FUNCION DE GUARDAR EN MONGO FUNCIONA BIEN
+    // PERO LA FUNCION DE CONSULTAR LO GUARDADO PARA REUTILIZARLO SOLO LLEGA HASTA
 });
 
 //console.log(wa.options.session)
