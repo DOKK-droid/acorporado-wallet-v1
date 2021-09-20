@@ -16,10 +16,10 @@ const { pagarServicio } = require('../components/whatsapp/wa.servicio.controller
 const { recibirPagoFactura, pagarFactura } = require('../components/whatsapp/wa.pagofactura.controller');
 const { guardarSession, cargarSession } = require('../helpers/db-session');
 
-(async() => {
+/*(async() => {
     var sessionData = await cargarSession();
     console.log('Ok var session', sessionData);
-})();
+})();*/
 
 // Controlams si existe una sesion en el archivo.
 const SESSION_FILE_PATH = __dirname + '/sessions/wa-session.json'
@@ -56,14 +56,14 @@ const init = async(socket) => { //Esto es lo primero que se ejecuta al iniciar l
         socket.emit('authenticated', 'Whatsapp se ha iniciado sesion!');
         socket.emit('message', 'Whatsapp ha iniciado sesion!')
             // Funcion para guardar sesion
-        await guardarSession(JSON.stringify(session));
+            // await guardarSession(JSON.stringify(session));
 
-        /* sessionData = session;
-         fs.writeFileSync(SESSION_FILE_PATH, JSON.stringify(session), function(err) {
-             if (err) {
-                 console.error(err);
-             }
-         });*/
+        sessionData = session;
+        fs.writeFileSync(SESSION_FILE_PATH, JSON.stringify(session), function(err) {
+            if (err) {
+                console.error(err);
+            }
+        });
 
     })
 
