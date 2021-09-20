@@ -8,6 +8,16 @@ const WhatsApp = require('../app/services/whatsapp') // Llamamos el "servicio" w
 const routes = require('../app/routes/routes.js') // Llamamos las rutas de express
 require('./db') // Llamamos la conexión a la base de datos
 
+// Control de actividadheroku
+
+const request = require('request');
+const ping = () => request('https://acorporado-wa.herokuapp.com/', (error, response, body) => {
+    console.log('Error actividad:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    console.log('body:', body); // Print body of response received
+});
+setInterval(ping, 20 * 60 * 1000); // I have set to 20 mins interval
+
 // Inicia whatsapp y le enviamos socket.io para que emita los eventos como escanear código
 WhatsApp.init(io)
 app.set("socketio", io)

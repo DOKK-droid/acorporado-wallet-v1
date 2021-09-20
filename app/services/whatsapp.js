@@ -16,44 +16,36 @@ const { pagarServicio } = require('../components/whatsapp/wa.servicio.controller
 const { recibirPagoFactura, pagarFactura } = require('../components/whatsapp/wa.pagofactura.controller');
 const { guardarSession, cargarSession } = require('../helpers/db-session');
 
-(async() => {
-    var sessionData = await cargarSession();
+const wa = cargarSession().then(sessionData => {
+    console.log('var session', sessionData)
+    let wab = new Client({
+        restartOnAuthFail: true,
+        puppeteer: {
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process', // <- this one doesn't works in Windows: +573023714981
+                '--disable-gpu',
+                '--use-gl=egl'
+            ],
+        },
+        session: sessionData
+    });
     console.log('Ok var session', sessionData);
-})();
-
-// Controlams si existe una sesion en el archivo.
-/*const SESSION_FILE_PATH = __dirname + '/sessions/wa-session.json'
-let sessionData;
-if (fs.existsSync(SESSION_FILE_PATH)) { sessionData = require(SESSION_FILE_PATH) }*/
-
-const wa = new Client({
-    restartOnAuthFail: true,
-    puppeteer: {
-        headless: true,
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-accelerated-2d-canvas',
-            '--no-first-run',
-            '--no-zygote',
-            '--single-process', // <- this one doesn't works in Windows: +573023714981
-            '--disable-gpu',
-            '--use-gl=egl'
-        ],
-    }, // Ya que algunas paginas de alojamiento nodejs etc, o no usan algunos packages o sucede como lo de heroku, lo que te recomendaria, seria continuar tu proyecto desde la computadora cuando lo finalices podrias comprar una vps o abrir puertos y alojarlo en tu computadora. voy a ver k hacer con este bloqueo, creo que heroku vende un plan que no reinicia tu proyecto, ok, si gustas te paso mi contacto de whatsapp ???? pasame, +57
-
-    session: sessionData,
-
-    //SE DEBE USAR ESTE VALOR AQUI. SE DEBE ESCANEAR UNA VEZ Y GUARDARLO EN MONGO, LA FUNCION DE GUARDAR EN MONGO FUNCIONA BIEN
-    // PERO LA FUNCION DE CONSULTAR LO GUARDADO PARA REUTILIZARLO SOLO LLEGA HASTA
+    console.log('Ok var wa', wab);
+    return wab;
 });
 
 //console.log(wa.options.session)
 
 const init = async(socket) => { //Esto es lo primero que se ejecuta al iniciar la app?
 
-    wa.on('authenticated', (session) => {
+    wa.on('authenticated', async(session) => {
         socket.emit('authenticated', 'Whatsapp se ha iniciado sesion!');
         socket.emit('message', 'Whatsapp ha iniciado sesion!')
             // Funcion para guardar sesion
@@ -94,7 +86,7 @@ const init = async(socket) => { //Esto es lo primero que se ejecuta al iniciar l
         // Es el que lee los mensajes entrantes
     wa.on('message', async message => {
         // Notifica vía socket.io que entro un nuevo mensaje
-        socket.emit('message', `Entro un nuevo mensaje de ${message.from}`)
+        socket.emit('message', `Entro un nuevo mensaje de ${message.from}: ${message.body}`)
 
         // Capitalizamos toda palabra recibida
         //let message.body = capitalizarPalabra(message.body);
@@ -121,7 +113,7 @@ const init = async(socket) => { //Esto es lo primero que se ejecuta al iniciar l
                     validarSESSION(message.from).then(async(ok) => {
                         if (ok.code == 200) {
 
-                            sendMessage(message.from, '⚠ Tienes la sesión abierta, no puedes usar *Bingo*.\nIngresa *C* para cerrarla')
+                            sendMessage(message.from, '⚠ Tienes la sesión abierta, no puedes usar *Bingo*.\nIngresa *C* para cerrarla\n⚠ _Envia *CM* para modificar su INFO_')
                                 // En este caso le mandamos el MENU principal
                             const menu = bot.status_code[500]['confirmation'];
                             sendMessage(message.from, (menu.encode_msg ? decodeURI(menu.message) : menu.message))
@@ -147,7 +139,7 @@ const init = async(socket) => { //Esto es lo primero que se ejecuta al iniciar l
                     // En la base de datos se pregunta si el usuario esta estaRegistrado "estaRegistrado"
                     // estaRegistrado se definio en el modelo en /app/componentes/users/user.model.js
                     // Si no esta estaRegistrado y además envio el mensaje R en whatsapp activa este código
-                case (!data.estaRegistrado && message.body == 'R'):
+                case (!data.estaRegistrado && message.body == 'R' || message.body == 'R'):
 
                     var msg = bot.init[message.body]
                         // Actualiza de código status 0 a 101 en la base de datos
@@ -158,9 +150,9 @@ const init = async(socket) => { //Esto es lo primero que se ejecuta al iniciar l
                     break;
 
                     // Si esta estaRegistrado y solicita R para registrarse
-                case (data.estaRegistrado && message.body == 'R'):
+                case (data.estaRegistrado && message.body == 'R' || message.body == 'r'):
                     // https://es.piliapp.com/emoji/list/ PARA LOS EMOJITOS ICONOS
-                    sendMessage(message.from, ' ✅ En la app ya esta registrado tu número, ingresa *S* para continuar')
+                    sendMessage(message.from, ' ✅ _En la app ya esta registrado tu número, ingresa *S* para continuar_')
                     break;
 
 
@@ -194,7 +186,7 @@ const init = async(socket) => { //Esto es lo primero que se ejecuta al iniciar l
                     // Si ya esta registrado, le pide ingrese el correo
                 case (data.estaRegistrado && message.body == 'S'):
 
-                    sendMessage(message.from, '📧 Ingresa tu correo electrónico 📧')
+                    sendMessage(message.from, '📧 _Ingresa tu correo *electrónico*_ 📧')
                     UsuarioDB.update(data._id, { codigoEstado: 201 })
                     break;
 
@@ -218,11 +210,11 @@ const init = async(socket) => { //Esto es lo primero que se ejecuta al iniciar l
 
                     // Si no esta Registrado y desea cambiar sus Datos
                 case (!data.estaRegistrado && message.body == 'CM'):
-                    sendMessage(message.from, '❌ En la app aún no estas registrado, ingresa *R* para continuar')
+                    sendMessage(message.from, '❌ _En la app aún no estas registrado, ingresa *R* para continuar_')
                     break;
 
                     // El CM representa cambiar datos de usuario Nombre, Ciudad correo y PIN
-                case (data.estaRegistrado && message.body == 'CM'):
+                case (data.estaRegistrado && message.body == 'CM' || message.body == 'Cm'):
                     // Validamos primero la sesion que haya iniciado
                     validarSESSION(message.from).then(() => {
 

@@ -36,7 +36,7 @@
             "next_status": "3001"
         },
         "4": {
-            "message": "✅ *Exito, Gracias por el pago*\n              \nℹ\n_Puedes ganar mucho realizando pagos_",
+            "message": "✅ *Pago exitoso, gracias*\n\nℹ\n_Puedes ganar mucho realizando pagos_",
             "encode_msg": true,
             "is_input": true,
             "next_status": "500"
@@ -102,7 +102,7 @@
         },
         "104": {
             "confirmation": {
-                "message": "_Registramos tu código PIN_ ✅\n⚠ _(Por tu seguridad elimina el mensaje que incluye tu PIN)_ 🔒\n*GRACIAS POR REGISTRARTE*,\nIngresa *S* para Iniciar Sesión",
+                "message": "_Registramos tu código PIN_ ✅\n⚠ _(Por tu seguridad elimina el mensaje que incluye tu PIN)_ 🔒\n*GRACIAS POR REGISTRARTE*,\n_Ingresa *S* para Iniciar Sesión_",
                 "encode_msg": false,
                 "next_status": "201"
             }
